@@ -234,11 +234,9 @@ function displayMerchantItems(event) {
 
 function getMerchantCoupons(event) {
   let merchantId = event.target.closest("article").id.split('-')[1]
-  console.log("Merchant ID:", merchantId)
   showingText.innerText = `All Coupons for Merchant #${merchantId}`
   fetchData(`merchants/${merchantId}/coupons`)
   .then(couponData => {
-    console.log("Coupon data from fetch:", couponData)
     displayMerchantCoupons(couponData);
   })
 }
@@ -247,7 +245,6 @@ function displayMerchantCoupons(coupons) {
   show([couponsView])
   hide([merchantsView, addNewButton, itemsView])
   couponsView.innerHTML = ''
-  console.log('test', coupons)
   coupons.data.forEach(coupon => {
     let merchant = findMerchant(coupon.attributes.merchant_id).attributes.name;
     couponsView.innerHTML += `
@@ -260,7 +257,6 @@ function displayMerchantCoupons(coupons) {
       </article>
     `
   })
-  console.log('test')
 }
 
 //Helper Functions
