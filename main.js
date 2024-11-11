@@ -235,7 +235,7 @@ function displayMerchantItems(event) {
 function getMerchantCoupons(event) {
   let merchantId = event.target.closest("article").id.split('-')[1]
   console.log("Merchant ID:", merchantId)
-    showingText.innerText = `All Items for Merchant #${merchantId}`
+  showingText.innerText = `All Coupons for Merchant #${merchantId}`
   fetchData(`merchants/${merchantId}/coupons`)
   .then(couponData => {
     console.log("Coupon data from fetch:", couponData)
