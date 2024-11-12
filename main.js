@@ -165,6 +165,24 @@ function showMerchantItemsView(id, items) {
   displayItems(items)
 }
 
+function showMerchantCouponsview(coupons) {
+  show([couponsView])
+  hide([merchantsView, addNewButton, itemsView])
+  couponsView.innerHTML = ''
+  coupons.data.forEach(coupon => {
+    let merchant = findMerchant(coupon.attributes.merchant_id).attributes.name;
+    couponsView.innerHTML += `
+      <article class="coupon" id="coupon-${coupon.id}">
+        <h2>${coupon.attributes.name}</h2>
+        <p>${coupon.attributes.description}</p>
+        <p>${coupon.attributes.code}</p>
+        <p>${coupon.attributes.status}</p>
+        <p class="merchant-name-in-coupon">Merchant: ${merchant}</p>
+      </article>
+    `
+  })
+}
+
 // Functions that add data to the DOM
 function displayItems(items) {
   itemsView.innerHTML = ''
@@ -237,27 +255,11 @@ function getMerchantCoupons(event) {
   showingText.innerText = `All Coupons for Merchant #${merchantId}`
   fetchData(`merchants/${merchantId}/coupons`)
   .then(couponData => {
-    displayMerchantCoupons(couponData);
+    showMerchantCouponsview(couponData);
   })
 }
 
-function displayMerchantCoupons(coupons) {
-  show([couponsView])
-  hide([merchantsView, addNewButton, itemsView])
-  couponsView.innerHTML = ''
-  coupons.data.forEach(coupon => {
-    let merchant = findMerchant(coupon.attributes.merchant_id).attributes.name;
-    couponsView.innerHTML += `
-      <article class="coupon" id="coupon-${coupon.id}">
-        <h2>${coupon.attributes.name}</h2>
-        <p>${coupon.attributes.description}</p>
-        <p>${coupon.attributes.code}</p>
-        <p>${coupon.attributes.status}</p>
-        <p class="merchant-name-in-coupon">Merchant: ${merchant}</p>
-      </article>
-    `
-  })
-}
+
 
 //Helper Functions
 function show(elements) {
